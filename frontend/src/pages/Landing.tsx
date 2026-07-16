@@ -52,7 +52,7 @@ const FEATURES: Feature[] = [
   },
   {
     tag: "blue", label: "AI diagnosis", icon: IC.spark,
-    title: "Evidence-verified Claude diagnosis",
+    title: "Evidence-verified AI diagnosis",
     body: "Every evidence quote must appear verbatim in the log or it is dropped. Diagnoses with fabricated evidence are downgraded to hypotheses.",
   },
   {
@@ -79,7 +79,7 @@ const FEATURES: Feature[] = [
 
 const STEPS = [
   { n: "01", title: "Point a webhook", body: "Add a failure callback in Airflow or a dbt run_results upload. One POST per failed run." },
-  { n: "02", title: "Get the diagnosis", body: "Redaction, fingerprinting, rule triage, and (optionally) Claude produce a root cause, plain-English explanation, evidence, and fixes." },
+  { n: "02", title: "Get the diagnosis", body: "Redaction, fingerprinting, rule triage, and (optionally) AI analysis produce a root cause, plain-English explanation, evidence, and fixes." },
   { n: "03", title: "Fix and confirm", body: "Apply a recommended fix, mark the incident resolved, and confirm “this fixed it” so recurrences resolve themselves." },
 ];
 
@@ -158,7 +158,7 @@ export default function LandingPage() {
           <h1>Pipeline failures, diagnosed in minutes — not hours.</h1>
           <p>
             Pipeline Doctor ingests Airflow and dbt failures, deduplicates them into
-            incidents, finds the root cause with hybrid rules + Claude diagnosis, and
+            incidents, finds the root cause with hybrid rules + AI diagnosis, and
             recommends fixes backed by verbatim log evidence.
           </p>
           <div className="lp-cta">
@@ -206,7 +206,7 @@ export default function LandingPage() {
                     <span className="lp-dot" />
                     AI enabled
                   </span>
-                  <p>Rules + Claude hybrid diagnosis</p>
+                  <p>Rules + LLM hybrid diagnosis</p>
                 </div>
               </div>
               <div className="lp-mini">
@@ -268,7 +268,7 @@ export default function LandingPage() {
                 <span className="lp-dot" />
                 AI enabled
               </span>
-              <p>Evidence-verified Claude diagnosis</p>
+              <p>Evidence-verified AI diagnosis</p>
             </div>
           </div>
         </section>
@@ -342,7 +342,7 @@ export default function LandingPage() {
             <div className="lp-plan">
               <div className="lp-plan-label">
                 Runs free on deterministic rules — add an Anthropic API key to enable
-                Claude diagnosis.
+                AI diagnosis.
               </div>
               <div className="lp-checks">
                 <div>
@@ -351,7 +351,7 @@ export default function LandingPage() {
                 </div>
                 <div>
                   <Icon d={IC.check} size={14} />
-                  Claude diagnoses verified against verbatim log evidence
+                  AI diagnoses verified against verbatim log evidence
                 </div>
                 <div>
                   <Icon d={IC.check} size={14} />
@@ -391,7 +391,7 @@ export default function LandingPage() {
           <div className="lp-foot-bottom">
             <span>© 2026 Pipeline Doctor</span>
             <div className="lp-foot-notes">
-              <span>Rules + Claude hybrid diagnosis</span>
+              <span>Rules + LLM hybrid diagnosis</span>
               <span>Evidence verified verbatim</span>
             </div>
           </div>

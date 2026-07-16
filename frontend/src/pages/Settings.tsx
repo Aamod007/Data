@@ -11,7 +11,7 @@ interface Health {
 
 const ENV_VARS = [
   ["PD_DATABASE_URL", "sqlite:///./pipeline_doctor.db", "Database. Point at Postgres in production."],
-  ["PD_ANTHROPIC_API_KEY", "(empty)", "Enables Claude diagnosis; rules-only when unset."],
+  ["PD_ANTHROPIC_API_KEY", "(empty)", "Enables AI diagnosis; rules-only when unset."],
   ["PD_DIAGNOSIS_MODEL", "claude-sonnet-5", "Main diagnosis model."],
   ["PD_TRIAGE_MODEL", "claude-haiku-4-5-20251001", "Fast triage model."],
   ["PD_MAX_DIAGNOSIS_TOKENS", "4096", "Output token cap per diagnosis."],
@@ -109,7 +109,7 @@ export default function SettingsPage() {
               <div className="st-row-title">Diagnosis engine</div>
               <div className="st-row-desc">
                 {health && !health.ai_enabled
-                  ? "Set PD_ANTHROPIC_API_KEY on the backend to enable Claude diagnosis."
+                  ? "Set PD_ANTHROPIC_API_KEY on the backend to enable AI diagnosis."
                   : "Determined by PD_ANTHROPIC_API_KEY on the backend."}
               </div>
             </div>

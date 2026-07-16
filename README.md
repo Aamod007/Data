@@ -18,7 +18,7 @@ Airflow / dbt / CI ──webhooks──▶ Ingestion ──▶ Redaction ──�
                                           │
                      Knowledge base (curated + tenant-learned patterns)
                                           │
-                     Claude diagnosis (structured output + evidence verification)
+                     LLM diagnosis (structured output + evidence verification)
                                           │
                   Incident + diagnosis + fixes  ──▶  Web app / API
 ```
@@ -28,7 +28,7 @@ Key design decisions:
 - **CPEM (Canonical Pipeline Event Model)** — all platforms normalize to one schema
   (`Pipeline → Run → TaskRun → LogBundle`), so the diagnosis engine is platform-agnostic.
 - **Hybrid diagnosis** — deterministic rules catch the well-known ~70% of failures
-  instantly and for free; Claude handles the long tail with structured output.
+  instantly and for free; the LLM handles the long tail with structured output.
   Without an `PD_ANTHROPIC_API_KEY`, the system still works fully on rules + KB.
 - **Evidence verification** — every LLM evidence quote must appear verbatim in the
   log or it is dropped; diagnoses with fabricated evidence are downgraded to
@@ -108,7 +108,7 @@ curl -X POST http://localhost:8000/v1/diagnose \
 | Variable | Default | Purpose |
 |---|---|---|
 | `PD_DATABASE_URL` | `sqlite:///./pipeline_doctor.db` | Postgres URL in prod |
-| `PD_ANTHROPIC_API_KEY` | (empty) | Enables Claude diagnosis; rules-only otherwise |
+| `PD_ANTHROPIC_API_KEY` | (empty) | Enables AI diagnosis; rules-only otherwise |
 | `PD_DIAGNOSIS_MODEL` | `claude-sonnet-5` | Main diagnosis model |
 | `PD_INGEST_API_KEY` | (empty) | Shared-secret auth for ingest webhooks |
 | `PD_CORS_ORIGINS` | localhost:3000,5173 | Allowed web app origins |
@@ -125,7 +125,7 @@ backend/
       fingerprint.py     # error normalization, hashing, smart log truncation
       triage.py          # 18 deterministic failure-class rules
       knowledge.py       # curated KB + tenant learning loop
-      diagnosis.py       # Claude engine + evidence verification + fallback
+      diagnosis.py       # LLM engine + evidence verification + fallback
       ingestion.py       # event -> entities -> incident -> diagnosis
     connectors/          # airflow.py, dbt.py payload normalizers
     routers/             # ingest, incidents, dashboard
@@ -134,7 +134,7 @@ backend/
 frontend/
   src/
     api/                 # typed client (client.ts, types.ts)
-    components/          # Layout, Pills, IncidentCard, BarRows, DiagnosisPanel, icons
+    components/          # Layout, Pills, IncidentCard, DiagnosisPanel, icons
     hooks/useFetch.ts    # data loading with stale-response guard
     pages/               # Landing, Dashboard, Incidents, IncidentDetail, Pipelines,
                          # Diagnose, KnowledgeBase, Integrations, Settings

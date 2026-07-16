@@ -4,7 +4,7 @@ Pipeline per incident:
   1. Recurrence: fingerprint lookup against prior resolved incidents.
   2. Rule triage: deterministic classification (fast, free).
   3. KB retrieval: curated + tenant-learned knowledge matching the log.
-  4. LLM diagnosis (Claude) with structured output, grounded by 2+3.
+  4. LLM diagnosis with structured output, grounded by 2+3.
   5. Evidence verification: every quote must literally appear in the log,
      else the diagnosis is downgraded to a hypothesis.
 

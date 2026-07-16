@@ -1,6 +1,7 @@
 .venv/
 __pycache__/
 .claude/settings.local.json
+CLAUDE.md
 ui/x/
 f11549e5aa332221265ae247fb343ccc.jpg
 *.db
