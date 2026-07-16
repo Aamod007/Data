@@ -1,0 +1,112 @@
+/* ---- connector card grid (Screen 6: 3-col cards, icon + name + status + action) ---- */
+
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+.ig-card { display: flex; flex-direction: column; gap: 4px; }
+
+.ig-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ig-card-id { display: flex; align-items: flex-start; gap: 11px; }
+
+.ig-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  color: var(--ink-2);
+  display: grid;
+  place-items: center;
+}
+
+.ig-name { font-weight: 600; font-size: 14px; margin-bottom: 6px; letter-spacing: -0.01em; }
+
+.ig-setup {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  font-weight: 550;
+  color: var(--ink);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  border-radius: 9px;
+  padding: 5px 11px;
+  white-space: nowrap;
+}
+.ig-setup:hover { background: var(--wash); text-decoration: none; }
+
+.ig-card .meta-row code {
+  background: var(--code-bg);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 11.5px;
+}
+
+/* ---- setup panels ---- */
+
+.ig-hook-head { display: flex; align-items: center; gap: 10px; }
+.ig-hook-head h2 { margin: 0; }
+
+.ig-url {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+.ig-url code {
+  background: var(--code-bg);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  word-break: break-all;
+}
+
+.ig-note { color: var(--ink-2); font-size: 13.5px; margin: 6px 0 0; }
+.ig-note code {
+  background: var(--code-bg);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 12px;
+}
+
+/* ---- dashed empty-state CTA (Screen 6 bottom section) ---- */
+
+.ig-cta {
+  border: 1px dashed var(--hairline);
+  border-radius: 18px;
+  background: var(--wash);
+  text-align: center;
+  padding: 44px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.ig-cta .ig-icon { border-radius: 999px; width: 42px; height: 42px; }
+.ig-cta h3 { margin: 4px 0 0; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.ig-cta p { margin: 0; max-width: 480px; color: var(--muted); font-size: 13.5px; }
+
+.ig-cta-btn {
+  margin-top: 10px;
+  display: inline-block;
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 999px;
+  padding: 8px 18px;
+}
+.ig-cta-btn:hover { opacity: 0.88; text-decoration: none; }

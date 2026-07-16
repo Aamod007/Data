@@ -168,15 +168,26 @@ def ingest_run_event(db: Session, workspace_id: str, connection: Connection,
                 title=f"{pipeline.name}: {task_label} failed",
             )
             db.add(incident)
-            db.flush()
+            pipeline_name = pipeline.name
+            task_name = failed_task.name if failed_task else ""
+            node_type = failed_task.node_type if failed_task else ""
 
             kb_items = knowledge.search_kb(db, log_text, workspace_id, event.platform)
+
+            # Commit BEFORE the (potentially seconds-long) LLM call: the run and
+            # incident are durable, and the SQLite write lock is not held across
+            # network I/O. A diagnose() failure then can't discard the ingest.
+            # Note: dedup is still check-then-insert; the race window is now
+            # milliseconds — add a unique index on (workspace_id, fingerprint)
+            # once a migration story (Alembic) exists.
+            db.commit()
+
             result = diagnose(
                 log=log_text,
                 platform=event.platform,
-                pipeline_name=pipeline.name,
-                task_name=failed_task.name if failed_task else "",
-                node_type=failed_task.node_type if failed_task else "",
+                pipeline_name=pipeline_name,
+                task_name=task_name,
+                node_type=node_type,
                 kb_items=kb_items,
                 recurrence_note=recurrence_note,
             )
@@ -197,7 +208,7 @@ def ingest_run_event(db: Session, workspace_id: str, connection: Connection,
             # Better incident title once diagnosed
             if result.root_cause_summary:
                 summary = result.root_cause_summary.removeprefix("[Hypothesis] ")
-                incident.title = f"{pipeline.name}: {summary[:180]}"
+                incident.title = f"{pipeline_name}: {summary[:180]}"
 
     db.commit()
     return run, incident, deduplicated

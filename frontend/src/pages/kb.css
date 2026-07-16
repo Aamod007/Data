@@ -1,0 +1,98 @@
+/* ---- header row: title + search/filter chrome (design: header-right controls) ---- */
+
+.kb-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.kb-head .subtitle { margin-bottom: 20px; }
+
+.kb-chrome-row { display: flex; gap: 8px; }
+.kb-chrome {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+.kb-chrome svg { flex-shrink: 0; }
+
+/* ---- learning-loop step cards ---- */
+
+.kb-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.kb-step h3 { font-size: 14.5px; margin: 12px 0 6px; }
+.kb-step p { color: var(--muted); font-size: 13.5px; line-height: 1.6; margin: 0; }
+
+/* ---- learned patterns: centered dashed empty state (design's empty card) ---- */
+
+.kb-section { margin-bottom: 14px; }
+
+.kb-empty-card {
+  border: 1px dashed var(--hairline);
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+.kb-empty-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  margin-bottom: 8px;
+}
+.kb-empty-title { font-weight: 600; font-size: 15px; }
+.kb-hint { color: var(--muted); font-size: 13px; max-width: 420px; margin: 0 0 14px; }
+
+/* ---- skeleton grid: hints at future pattern cards (design's placeholder row) ---- */
+
+.kb-skel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.kb-skel {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kb-skel-bar {
+  height: 12px;
+  border-radius: 4px;
+  background: var(--wash);
+}
+.kb-skel-pills { display: flex; gap: 8px; padding-top: 4px; }
+.kb-skel-pill {
+  width: 64px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--wash);
+}
+
+/* ---- curated rules ---- */
+
+.kb-note { color: var(--ink-2); font-size: 13.5px; margin: 0 0 12px; line-height: 1.65; }
+.kb-seed-row { display: flex; gap: 6px; flex-wrap: wrap; }

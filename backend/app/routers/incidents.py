@@ -61,16 +61,17 @@ def list_incidents(
     q = db.query(Incident).order_by(Incident.last_seen_at.desc())
     if status:
         q = q.filter(Incident.status == status)
+    if category:
+        # Filter in SQL so pagination applies to the filtered set — filtering
+        # after offset/limit returns incomplete or empty pages.
+        q = (
+            q.join(Diagnosis, Diagnosis.incident_id == Incident.id)
+            .filter(Diagnosis.root_cause_category == category)
+            .distinct()
+        )
     incidents = q.offset(offset).limit(limit).all()
 
-    out = []
-    for inc in incidents:
-        diag = _latest_diagnosis(inc)
-        if category and (diag is None or diag.root_cause_category != category):
-            continue
-        pipeline = db.get(Pipeline, inc.pipeline_id)
-        out.append(_summary(inc, pipeline))
-    return out
+    return [_summary(inc, db.get(Pipeline, inc.pipeline_id)) for inc in incidents]
 
 
 @router.get("/{incident_id}", response_model=IncidentDetail)

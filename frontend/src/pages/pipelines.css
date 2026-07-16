@@ -1,0 +1,133 @@
+/* Pipelines page — mirrors design Screen 4 (dark table card, zebra rows, health bars). */
+
+/* header row: title block left, refresh right */
+.pl-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+.pl-head .subtitle { margin-bottom: 0; }
+.pl-head h1 { margin-bottom: 2px; }
+.pl-head + .error-banner, .pl-head + .panel { margin-top: 24px; }
+
+/* outline buttons with icon, shared by refresh / retry / empty CTA */
+.pl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 7px 14px;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.pl-btn:hover { background: var(--wash); text-decoration: none; }
+.pl-btn svg { flex-shrink: 0; }
+
+/* error banner: icon + copy + retry, red-tinted like design */
+.pl-error {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+}
+.pl-error > svg { flex-shrink: 0; }
+.pl-error-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.pl-error-title { font-weight: 600; font-size: 13.5px; color: var(--ink); }
+.pl-error-desc {
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pl-danger {
+  background: var(--critical);
+  border-color: var(--critical);
+  color: #fff;
+  font-weight: 600;
+}
+.pl-danger:hover { background: var(--critical); opacity: 0.88; }
+
+/* table card: flush edges so header/zebra bands run full-bleed */
+.pl-table { padding: 0; overflow: hidden; }
+.pl-table th { padding: 12px 14px; letter-spacing: 0.18em; background: var(--surface); }
+.pl-table th:first-child, .pl-table td:first-child { padding-left: 22px; }
+.pl-table th:last-child, .pl-table td:last-child { padding-right: 22px; }
+.pl-table td { padding: 15px 14px; border-bottom: none; }
+.pl-table tbody tr:nth-child(even) { background: var(--wash); }
+
+/* column proportions from design: 2fr 1fr 1fr 1fr 2fr */
+.pl-c-name { width: 29%; }
+.pl-c-plat { width: 14%; }
+.pl-c-num { width: 14%; }
+.pl-c-rate { width: 29%; }
+.pl-num { text-align: right; }
+
+.pl-name { font-weight: 600; color: var(--ink); }
+
+/* rate: full-width track, fixed-width muted label */
+.pl-table .rate { display: flex; width: 100%; }
+.pl-table .rate .track { flex: 1; width: auto; height: 6px; border-radius: 999px; background: var(--surface-2); }
+.pl-table .rate .fill { border-radius: 999px; }
+.pl-rate-num {
+  color: var(--muted);
+  font-size: 12px;
+  width: 42px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* loading skeleton rows */
+.pl-bone {
+  display: inline-block;
+  height: 14px;
+  max-width: 100%;
+  border-radius: 999px;
+  background: var(--surface-2);
+  animation: pl-pulse 1.6s ease-in-out infinite;
+}
+.pl-bone-pill { height: 20px; }
+.pl-bone-bar { display: block; width: 100%; height: 6px; }
+@keyframes pl-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+/* empty state: centered icon disc, copy, CTA */
+.pl-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: 48px 20px;
+}
+.pl-empty-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+}
+.pl-empty-copy { display: flex; flex-direction: column; gap: 3px; }
+.pl-empty-title { font-weight: 600; font-size: 16px; color: var(--ink); }
+.pl-empty-desc { font-size: 13px; color: var(--muted); }
+
+@media (max-width: 860px) {
+  .pl-c-name, .pl-c-rate { width: 24%; }
+  .pl-table th, .pl-table td { padding-left: 8px; padding-right: 8px; }
+  .pl-table th:first-child, .pl-table td:first-child { padding-left: 14px; }
+  .pl-table th:last-child, .pl-table td:last-child { padding-right: 14px; }
+}

@@ -73,6 +73,11 @@ npm install
 npm run dev        # http://localhost:5173, expects backend on :8000
 ```
 
+Routes: `/` landing page · `/dashboard` · `/incidents` (+ detail) · `/pipelines` ·
+`/diagnose` (paste a log) · `/kb` knowledge base · `/integrations` webhook setup ·
+`/settings` system status. Point the app at a remote backend with
+`VITE_API_URL=https://api.example.com npm run dev`.
+
 ## API
 
 | Endpoint | Purpose |
@@ -127,8 +132,26 @@ backend/
   tests/                 # 47 tests: unit + end-to-end
   scripts/seed_demo.py   # realistic demo failures
 frontend/
-  src/pages/             # Dashboard, Incidents, IncidentDetail, Pipelines, Diagnose
+  src/
+    api/                 # typed client (client.ts, types.ts)
+    components/          # Layout, Pills, IncidentCard, BarRows, DiagnosisPanel, icons
+    hooks/useFetch.ts    # data loading with stale-response guard
+    pages/               # Landing, Dashboard, Incidents, IncidentDetail, Pipelines,
+                         # Diagnose, KnowledgeBase, Integrations, Settings
 ```
+
+## Production notes
+
+- SQLite runs with WAL + `busy_timeout` (set via engine pragmas) and the ingest
+  transaction commits **before** the LLM call, so a slow diagnosis never holds
+  the write lock or discards an ingested run. For real deployments set
+  `PD_DATABASE_URL` to Postgres.
+- Ingest/diagnose log inputs are capped (2 MB per task log) so a single webhook
+  can't exhaust memory or bloat the store.
+- Known limitations (roadmap): no schema migrations yet (`create_all` only —
+  add Alembic before evolving models against a live DB), single default
+  workspace, dedup is check-then-insert (unique index lands with migrations),
+  no auth on read endpoints (`PD_INGEST_API_KEY` covers ingest only).
 
 ## Roadmap
 

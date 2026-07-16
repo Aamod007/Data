@@ -19,7 +19,9 @@ class TaskEventIn(BaseModel):
     started_at: datetime | None = None
     ended_at: datetime | None = None
     upstream_task_ids: list[str] = Field(default_factory=list)
-    log: str = ""  # raw log text; will be redacted before storage
+    # raw log text; redacted before storage. Capped so one webhook can't OOM
+    # the server or bloat the incident store.
+    log: str = Field(default="", max_length=2_000_000)
 
 
 class RunEventIn(BaseModel):
@@ -47,8 +49,8 @@ class IngestAck(BaseModel):
 
 class AdhocDiagnoseIn(BaseModel):
     platform: PlatformType = PlatformType.generic
-    log: str
-    context: str = ""  # optional free-text: what were you running?
+    log: str = Field(min_length=1, max_length=2_000_000)
+    context: str = Field(default="", max_length=10_000)  # what were you running?
 
 
 # ---------- Diagnosis output ----------
