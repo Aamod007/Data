@@ -1,5 +1,11 @@
 /** API types mirroring the backend Pydantic schemas. */
 
+export interface Health {
+  status: string;
+  app: string;
+  ai_enabled: boolean;
+}
+
 export type IncidentStatus = "open" | "acknowledged" | "resolved" | "ignored";
 
 export interface Evidence {

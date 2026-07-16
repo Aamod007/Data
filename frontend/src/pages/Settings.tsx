@@ -1,13 +1,8 @@
+import { api } from "../api/client";
 import { useFetch } from "../hooks/useFetch";
 import "./settings.css";
 
 const BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
-
-interface Health {
-  status: string;
-  app: string;
-  ai_enabled: boolean;
-}
 
 const ENV_VARS = [
   ["PD_DATABASE_URL", "sqlite:///./pipeline_doctor.db", "Database. Point at Postgres in production."],
@@ -51,11 +46,7 @@ const wifiOffIcon = (
 );
 
 export default function SettingsPage() {
-  const { data: health, error, reload } = useFetch(async () => {
-    const res = await fetch(`${BASE}/health`);
-    if (!res.ok) throw new Error(`${res.status}`);
-    return res.json() as Promise<Health>;
-  });
+  const { data: health, error, reload } = useFetch(() => api.health());
 
   return (
     <>

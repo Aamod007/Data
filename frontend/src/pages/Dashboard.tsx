@@ -71,6 +71,7 @@ function DistroBars({ data }: { data: Record<string, number> }) {
 
 export default function DashboardPage() {
   const { data: stats, error, reload } = useFetch(() => api.dashboard());
+  const { data: health } = useFetch(() => api.health());
 
   if (error) return <div className="error-banner">Backend unreachable: {error}</div>;
   if (!stats) return <div className="empty">Loading…</div>;
@@ -86,10 +87,12 @@ export default function DashboardPage() {
           <p className="subtitle">Monitor incident health, trends, and response performance</p>
         </div>
         <div className="db-head-actions">
-          <span className="db-ai">
-            <span className="db-ai-dot" />
-            AI enabled
-          </span>
+          {health && (
+            <span className="db-ai">
+              <span className={`db-ai-dot${health.ai_enabled ? "" : " is-off"}`} />
+              {health.ai_enabled ? "AI enabled" : "Rules only"}
+            </span>
+          )}
           <button className="db-refresh" onClick={reload}>
             {refreshIcon}
             Refresh

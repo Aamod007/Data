@@ -14,9 +14,6 @@ const stroke = {
 const IC = {
   spark: "M8 1.5 9.7 6.3 14.5 8 9.7 9.7 8 14.5 6.3 9.7 1.5 8 6.3 6.3Z",
   check: "M3.2 8.4 6.4 11.6 12.8 4.8",
-  trend: "M1.5 11.5 5.8 7.2 8.8 10.2 14.5 4.5M10.6 4.5h3.9v3.9",
-  bot: "M4 5.5h8A1.5 1.5 0 0 1 13.5 7v4a1.5 1.5 0 0 1-1.5 1.5H4A1.5 1.5 0 0 1 2.5 11V7A1.5 1.5 0 0 1 4 5.5ZM8 5.5v-3M5.8 8.5v1.2M10.2 8.5v1.2",
-  pulse: "M1.5 8h2.6l2-4.2 3.4 8.4 2-4.2h3",
   bolt: "M8.7 1.5 4 9h3.2l-.9 5.5L11 7H7.8l.9-5.5Z",
   rules: "M3 4.2h6.2M3 8h6.2M3 11.8h4M10.4 10.9l1.7 1.7 2.6-3.1",
   shield:
@@ -83,39 +80,6 @@ const STEPS = [
   { n: "03", title: "Fix and confirm", body: "Apply a recommended fix, mark the incident resolved, and confirm “this fixed it” so recurrences resolve themselves." },
 ];
 
-type BarTone = "ink" | "accent" | "muted";
-type Bar = { label: string; pct: number; tone: BarTone };
-
-const CAUSE_BARS: Bar[] = [
-  { label: "Timeout", pct: 42, tone: "ink" },
-  { label: "Schema drift", pct: 28, tone: "accent" },
-  { label: "OOM", pct: 18, tone: "muted" },
-];
-
-const PLATFORM_BARS: Bar[] = [
-  { label: "Airflow", pct: 36, tone: "ink" },
-  { label: "dbt", pct: 24, tone: "accent" },
-  { label: "CPEM", pct: 18, tone: "muted" },
-];
-
-function BarGroup({ bars }: { bars: Bar[] }) {
-  return (
-    <div className="lp-bars">
-      {bars.map((b) => (
-        <div key={b.label}>
-          <div className="lp-bar-label">
-            <span>{b.label}</span>
-            <span>{b.pct}%</span>
-          </div>
-          <div className="lp-bar-track">
-            <div className={`lp-bar-fill is-${b.tone}`} style={{ width: `${b.pct}%` }} />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function Brand({ sub }: { sub: string }) {
   return (
     <div className="lp-brand">
@@ -168,108 +132,6 @@ export default function LandingPage() {
             <a className="lp-text-link" href={GITHUB_URL} target="_blank" rel="noreferrer">
               View on GitHub
             </a>
-          </div>
-        </section>
-
-        <section className="lp-preview">
-          <div className="lp-preview-wrap">
-            <div className="lp-preview-panel">
-              <div className="lp-preview-topline">
-                <span className="lp-strong">Dashboard preview</span>
-                <span>Last 30 days</span>
-              </div>
-              <div className="lp-grid2">
-                <div className="lp-mini">
-                  <div className="lp-mini-head">
-                    <span>Avg confidence</span>
-                    <Icon d={IC.trend} size={14} />
-                  </div>
-                  <div className="lp-stat-value">92%</div>
-                  <div className="lp-chart-tint">
-                    <svg viewBox="0 0 180 40" preserveAspectRatio="none" aria-hidden="true">
-                      <path
-                        d="M0 30 C20 28, 28 34, 40 26 S70 18, 84 22 S110 12, 126 16 S150 10, 180 8"
-                        fill="none"
-                        stroke="var(--accent)"
-                        strokeLinecap="round"
-                        strokeWidth="3"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div className="lp-mini">
-                  <div className="lp-mini-head">
-                    <span>AI status</span>
-                    <Icon d={IC.bot} size={14} />
-                  </div>
-                  <span className="lp-ai-pill">
-                    <span className="lp-dot" />
-                    AI enabled
-                  </span>
-                  <p>Rules + LLM hybrid diagnosis</p>
-                </div>
-              </div>
-              <div className="lp-mini">
-                <div className="lp-mini-head">
-                  <span>Incidents over time</span>
-                  <span>Last 30 days</span>
-                </div>
-                <div className="lp-chart-tint lp-chart-lg">
-                  <svg viewBox="0 0 520 120" preserveAspectRatio="none" aria-hidden="true">
-                    <path
-                      d="M0 92 C40 88, 52 74, 84 78 S132 62, 160 66 S212 48, 244 52 S300 34, 332 38 S392 24, 428 28 S476 18, 520 20"
-                      fill="none"
-                      stroke="var(--accent)"
-                      strokeLinecap="round"
-                      strokeWidth="4"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <div className="lp-grid2">
-                <div className="lp-mini">
-                  <div className="lp-mini-head">
-                    <span>By root cause</span>
-                    <Icon d={IC.pulse} size={14} />
-                  </div>
-                  <BarGroup bars={CAUSE_BARS} />
-                </div>
-                <div className="lp-mini">
-                  <div className="lp-mini-head">
-                    <span>By platform</span>
-                    <Icon d={IC.bolt} size={14} />
-                  </div>
-                  <BarGroup bars={PLATFORM_BARS} />
-                </div>
-              </div>
-            </div>
-
-            <div className="lp-float lp-float-left">
-              <div className="lp-float-head">
-                <span>Incident / INC-2048</span>
-                <span className="lp-live">Live</span>
-              </div>
-              <div className="lp-float-title">orders_daily failing — schema drift detected</div>
-              <div className="lp-bar-track">
-                <div className="lp-bar-fill is-ink" style={{ width: "84%" }} />
-              </div>
-              <div className="lp-float-meta">
-                <span>Confidence</span>
-                <strong>94%</strong>
-              </div>
-            </div>
-
-            <div className="lp-float lp-float-right">
-              <div className="lp-float-head">
-                <span>AI status</span>
-                <Icon d={IC.bot} size={14} />
-              </div>
-              <span className="lp-ai-pill">
-                <span className="lp-dot" />
-                AI enabled
-              </span>
-              <p>Evidence-verified AI diagnosis</p>
-            </div>
           </div>
         </section>
 

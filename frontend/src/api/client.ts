@@ -1,6 +1,7 @@
 import type {
   DashboardStats,
   Diagnosis,
+  Health,
   IncidentDetail,
   IncidentStatus,
   IncidentSummary,
@@ -22,6 +23,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const api = {
+  health: () => request<Health>("/health"),
   dashboard: () => request<DashboardStats>("/v1/dashboard"),
   incidents: (status?: string) =>
     request<IncidentSummary[]>(`/v1/incidents${status ? `?status=${status}` : ""}`),

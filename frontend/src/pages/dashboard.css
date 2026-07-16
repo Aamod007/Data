@@ -33,6 +33,10 @@
   background: var(--good);
   box-shadow: 0 0 0 4px rgba(12, 163, 12, 0.12);
 }
+.db-ai-dot.is-off {
+  background: var(--warn);
+  box-shadow: 0 0 0 4px rgba(250, 178, 25, 0.12);
+}
 
 .db-refresh {
   display: inline-flex;
