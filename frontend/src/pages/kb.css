@@ -1,4 +1,4 @@
-/* ---- header row: title + search/filter chrome (design: header-right controls) ---- */
+/* ---- header row ---- */
 
 .kb-head {
   display: flex;
@@ -8,19 +8,6 @@
   flex-wrap: wrap;
 }
 .kb-head .subtitle { margin-bottom: 20px; }
-
-.kb-chrome-row { display: flex; gap: 8px; }
-.kb-chrome {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: var(--surface);
-  color: var(--muted);
-  border: 1px solid var(--hairline);
-  border-radius: 10px;
-  padding: 8px 14px;
-}
-.kb-chrome svg { flex-shrink: 0; }
 
 /* ---- learning-loop step cards ---- */
 
@@ -61,36 +48,6 @@
 }
 .kb-empty-title { font-weight: 600; font-size: 15px; }
 .kb-hint { color: var(--muted); font-size: 13px; max-width: 420px; margin: 0 0 14px; }
-
-/* ---- skeleton grid: hints at future pattern cards (design's placeholder row) ---- */
-
-.kb-skel-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-  margin-top: 12px;
-}
-.kb-skel {
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  border-radius: 14px;
-  padding: 16px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.kb-skel-bar {
-  height: 12px;
-  border-radius: 4px;
-  background: var(--wash);
-}
-.kb-skel-pills { display: flex; gap: 8px; padding-top: 4px; }
-.kb-skel-pill {
-  width: 64px;
-  height: 20px;
-  border-radius: 999px;
-  background: var(--wash);
-}
 
 /* ---- curated rules ---- */
 

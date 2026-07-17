@@ -1,15 +1,8 @@
 import { Link } from "react-router-dom";
+import { stroke } from "../components/icons";
 import "./landing.css";
 
 const GITHUB_URL = "https://github.com/Aamod007/Data";
-
-const stroke = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.6,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-} as const;
 
 const IC = {
   spark: "M8 1.5 9.7 6.3 14.5 8 9.7 9.7 8 14.5 6.3 9.7 1.5 8 6.3 6.3Z",

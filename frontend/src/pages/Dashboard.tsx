@@ -113,7 +113,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="db-grid">
-        <section className="panel db-panel db-feed">
+        <section className="panel db-panel">
           <div className="db-panel-head">
             <div>
               <h2>Recent Incidents</h2>

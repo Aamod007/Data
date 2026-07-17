@@ -1,29 +1,17 @@
 import { useMemo, useState } from "react";
 import type { MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import type { IncidentStatus, IncidentSummary } from "../api/client";
+import type { IncidentSummary } from "../api/client";
 import { api } from "../api/client";
+import { STATUS_TAG } from "../components/Pills";
+import { stroke } from "../components/icons";
 import { useFetch } from "../hooks/useFetch";
 import { timeAgo } from "../lib/time";
 import "./incidents.css";
 
 const FILTERS = ["all", "open", "acknowledged", "resolved", "ignored"] as const;
 
-const STATUS_TAG: Record<IncidentStatus, string> = {
-  open: "red",
-  acknowledged: "amber",
-  resolved: "green",
-  ignored: "neutral",
-};
-
 /* inline icons, matching the house stroke style */
-const stroke = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.6,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-} as const;
 const iSearch = (
   <svg width="16" height="16" viewBox="0 0 16 16" {...stroke}>
     <circle cx="7" cy="7" r="4.6" />

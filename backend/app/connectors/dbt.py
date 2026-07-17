@@ -9,10 +9,9 @@ Accepts:
 }
 or a bare run_results.json (metadata.invocation_id used as run id).
 """
-from datetime import datetime
-
 from ..models import PlatformType, RunStatus
 from ..schemas import RunEventIn, TaskEventIn
+from . import _dt
 
 _STATUS_MAP = {
     "success": RunStatus.success,
@@ -23,15 +22,6 @@ _STATUS_MAP = {
     "skipped": RunStatus.skipped,
     "warn": RunStatus.success,
 }
-
-
-def _dt(value: str | None) -> datetime | None:
-    if not value:
-        return None
-    try:
-        return datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError:
-        return None
 
 
 def normalize(payload: dict) -> RunEventIn:

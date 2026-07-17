@@ -1,4 +1,5 @@
 """Incidents API: list, detail, status updates, feedback (learning loop)."""
+import re
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -12,6 +13,7 @@ from ..models import (
     IncidentStatus,
     LogBundle,
     Pipeline,
+    PlatformType,
     RootCauseCategory,
     TaskRun,
 )
@@ -137,14 +139,11 @@ def submit_feedback(incident_id: str, body: FeedbackIn, db: Session = Depends(ge
         pipeline = db.get(Pipeline, incident.pipeline_id)
         first_quote = diag.evidence[0]["quote"] if diag.evidence else ""
         if first_quote:
-            import re as _re
-
-            from ..models import PlatformType
             knowledge.learn_from_incident(
                 db,
                 workspace_id=incident.workspace_id,
                 platform=pipeline.platform if pipeline else PlatformType.generic,
-                error_signature_pattern=_re.escape(first_quote[:300]),
+                error_signature_pattern=re.escape(first_quote[:300]),
                 title=incident.title,
                 cause=diag.root_cause_summary,
                 fix=body.comment or (diag.fixes[0]["title"] if diag.fixes else "See prior incident"),

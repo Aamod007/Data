@@ -1,78 +1,11 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import type { Diagnosis, Fix, IncidentStatus } from "../api/client";
 import { api } from "../api/client";
+import { DiagnosisPanel } from "../components/DiagnosisPanel";
+import { STATUS_TAG } from "../components/Pills";
 import { useFetch } from "../hooks/useFetch";
 import { timeAgo } from "../lib/time";
 import "./incidents.css";
-
-const STATUS_TAG: Record<IncidentStatus, string> = {
-  open: "red",
-  acknowledged: "amber",
-  resolved: "green",
-  ignored: "neutral",
-};
-
-function FixCard({ fix }: { fix: Fix }) {
-  return (
-    <div className="fix">
-      <div className="fix-title">
-        {fix.title}
-        <span className="tag blue">{fix.type.replace(/_/g, " ")}</span>
-        {fix.risk !== "low" && <span className="tag amber">risk: {fix.risk}</span>}
-      </div>
-      {fix.steps.length > 0 && (
-        <ol>
-          {fix.steps.map((s, i) => (
-            <li key={i}>{s}</li>
-          ))}
-        </ol>
-      )}
-      {fix.diff && <pre className="log">{fix.diff}</pre>}
-    </div>
-  );
-}
-
-function DiagnosisSection({ diag }: { diag: Diagnosis }) {
-  return (
-    <div className="panel inc-panel">
-      <p className="inc-eyebrow">Diagnosis</p>
-      <div className="inc-chiprow">
-        <span className="tag violet">{diag.root_cause_category.replace(/_/g, " ")}</span>
-        {diag.is_transient && <span className="tag neutral">likely transient</span>}
-        <span className="inc-chip">Confidence {Math.round(diag.confidence * 100)}%</span>
-      </div>
-      <p className="inc-summary">{diag.root_cause_summary}</p>
-      <p className="explanation">{diag.explanation}</p>
-
-      {diag.evidence.length > 0 && (
-        <>
-          <p className="inc-eyebrow">Evidence</p>
-          {diag.evidence.map((ev, i) => (
-            <div className="evidence-quote" key={i}>
-              {ev.quote}
-              {ev.source && <div className="inc-ev-src">{ev.source}</div>}
-            </div>
-          ))}
-        </>
-      )}
-
-      {diag.fixes.length > 0 && (
-        <>
-          <p className="inc-eyebrow">Recommended fixes</p>
-          {diag.fixes.map((f, i) => (
-            <FixCard fix={f} key={i} />
-          ))}
-        </>
-      )}
-
-      <div className="meta-row">
-        <span>engine: {diag.engine}{diag.model_version ? ` (${diag.model_version})` : ""}</span>
-        <span>diagnosed in {diag.latency_ms}ms</span>
-      </div>
-    </div>
-  );
-}
 
 export default function IncidentDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -133,7 +66,7 @@ export default function IncidentDetailPage() {
       </header>
 
       {diag ? (
-        <DiagnosisSection diag={diag} />
+        <DiagnosisPanel diag={diag} variant="incident" />
       ) : (
         <div className="panel">
           <div className="empty">No diagnosis recorded.</div>

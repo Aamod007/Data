@@ -82,19 +82,6 @@ a:hover { text-decoration: underline; }
 .sidebar nav a svg { flex-shrink: 0; }
 .sidebar nav a:hover { background: var(--wash); color: var(--ink); text-decoration: none; }
 .sidebar nav a.active { background: var(--surface-2); color: var(--ink); font-weight: 550; }
-.sidebar nav a .count {
-  margin-left: auto;
-  background: var(--critical);
-  color: #fff;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 650;
-  min-width: 18px;
-  height: 18px;
-  display: grid;
-  place-items: center;
-  padding: 0 5px;
-}
 
 .sidebar .foot { margin-top: auto; padding: 0 10px; color: var(--muted); font-size: 12px; }
 
@@ -139,10 +126,7 @@ h2 { font-size: 15px; font-weight: 600; margin: 0 0 14px; letter-spacing: -0.01e
   padding: 16px 18px;
 }
 .card .label { color: var(--ink-2); font-size: 13px; margin-bottom: 10px; }
-.card .value-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
 .card .value { font-size: 30px; font-weight: 650; letter-spacing: -0.02em; line-height: 1; }
-.spark { display: flex; align-items: flex-end; gap: 3px; height: 26px; }
-.spark span { width: 5px; border-radius: 2px 2px 0 0; background: var(--accent); min-height: 2px; }
 
 /* ---- panels ---- */
 
@@ -153,9 +137,6 @@ h2 { font-size: 15px; font-weight: 600; margin: 0 0 14px; letter-spacing: -0.01e
   padding: 18px 20px;
   margin-bottom: 14px;
 }
-
-.two-col { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; align-items: start; }
-@media (max-width: 980px) { .two-col { grid-template-columns: 1fr; } }
 
 /* ---- incident item cards ---- */
 
@@ -304,15 +285,6 @@ tr:last-child td { border-bottom: none; }
 .rate .track { width: 64px; height: 4px; border-radius: 2px; background: var(--wash); overflow: hidden; }
 .rate .fill { height: 100%; border-radius: 2px; }
 
-/* ---- bar rows (right rail charts) ---- */
-
-.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.bar-row:last-child { margin-bottom: 0; }
-.bar-row .bar-label { width: 130px; color: var(--ink-2); font-size: 12.5px; text-align: right; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.bar-row .bar-track { flex: 1; height: 8px; }
-.bar-row .bar-fill { background: var(--accent); height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
-.bar-row .bar-count { font-size: 12px; color: var(--ink-2); width: 26px; font-variant-numeric: tabular-nums; }
-
 /* ---- tag pills (kanban-style tinted labels) ---- */
 
 .tag {
@@ -341,5 +313,3 @@ tr:last-child td { border-bottom: none; }
 }
 
 .note-good { color: var(--good); }
-.num-bad { color: var(--red-text); }
-.num-quiet { color: var(--muted); }

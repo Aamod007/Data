@@ -1,14 +1,12 @@
-import { api } from "../api/client";
+import { BASE, api } from "../api/client";
+import { stroke } from "../components/icons";
 import { useFetch } from "../hooks/useFetch";
 import "./settings.css";
-
-const BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
 const ENV_VARS = [
   ["PD_DATABASE_URL", "sqlite:///./pipeline_doctor.db", "Database. Point at Postgres in production."],
   ["PD_ANTHROPIC_API_KEY", "(empty)", "Enables AI diagnosis; rules-only when unset."],
   ["PD_DIAGNOSIS_MODEL", "claude-sonnet-5", "Main diagnosis model."],
-  ["PD_TRIAGE_MODEL", "claude-haiku-4-5-20251001", "Fast triage model."],
   ["PD_MAX_DIAGNOSIS_TOKENS", "4096", "Output token cap per diagnosis."],
   ["PD_LOG_CONTEXT_BUDGET", "24000", "Log characters sent to the LLM after smart truncation."],
   ["PD_INGEST_API_KEY", "(empty)", "Shared secret for ingest webhooks (X-API-Key). Empty disables auth."],
@@ -20,14 +18,6 @@ const PRIVACY = [
   ["Evidence verification", "Every AI evidence quote must appear verbatim in the log, or it is dropped and the diagnosis is downgraded to a hypothesis."],
   ["Logs are data", "Log content is treated as data, never as instructions."],
 ] as const;
-
-const stroke = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.6,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-} as const;
 
 const refreshIcon = (
   <svg width="14" height="14" viewBox="0 0 16 16" {...stroke}>

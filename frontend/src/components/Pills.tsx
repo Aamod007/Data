@@ -1,5 +1,14 @@
+import type { IncidentStatus } from "../api/client";
 import { timeAgo } from "../lib/time";
 import { icons } from "./icons";
+
+/** status → .tag color class (kanban-style tinted labels) */
+export const STATUS_TAG: Record<IncidentStatus, string> = {
+  open: "red",
+  acknowledged: "amber",
+  resolved: "green",
+  ignored: "neutral",
+};
 
 export function StatusPill({ status }: { status: string }) {
   return <span className={`pill ${status}`}>{status}</span>;

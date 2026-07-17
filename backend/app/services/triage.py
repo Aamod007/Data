@@ -13,7 +13,6 @@ from ..models import RootCauseCategory as C
 @dataclass
 class RuleMatch:
     category: C
-    title: str
     cause: str
     explanation: str
     fixes: list[dict] = field(default_factory=list)
@@ -336,7 +335,6 @@ def classify(log: str) -> RuleMatch | None:
             quote = log[start:end].strip()[:500]
             return RuleMatch(
                 category=rule.category,
-                title=rule.title,
                 cause=rule.cause,
                 explanation=rule.explanation,
                 fixes=rule.fixes,

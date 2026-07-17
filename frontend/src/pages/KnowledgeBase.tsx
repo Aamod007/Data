@@ -2,27 +2,6 @@ import { Link } from "react-router-dom";
 import { icons } from "../components/icons";
 import "./kb.css";
 
-const stroke = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.6,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-} as const;
-
-const searchIcon = (
-  <svg width="14" height="14" viewBox="0 0 16 16" {...stroke}>
-    <circle cx="7" cy="7" r="4.6" />
-    <path d="M10.4 10.4 14 14" />
-  </svg>
-);
-
-const filterIcon = (
-  <svg width="14" height="14" viewBox="0 0 16 16" {...stroke}>
-    <path d="M2.5 4.5h11M4.5 8h7M6.5 11.5h3" />
-  </svg>
-);
-
 const STEPS = [
   {
     tag: "blue", label: "1 · Resolve",
@@ -47,13 +26,6 @@ const SEED_FAMILIES = [
   "Snowflake · identifier / warehouse errors",
 ];
 
-// decorative placeholder cards (design's skeleton grid); bar widths in %
-const SKELETONS: number[][] = [
-  [66, 83, 80, 75],
-  [50, 75, 66, 83],
-  [60, 80, 66, 83],
-];
-
 export default function KnowledgeBasePage() {
   return (
     <>
@@ -61,14 +33,6 @@ export default function KnowledgeBasePage() {
         <div>
           <h1>Knowledge Base</h1>
           <p className="subtitle">Learnings from resolved incidents and feedback</p>
-        </div>
-        <div className="kb-chrome-row">
-          <button className="kb-chrome" disabled title="Search becomes available once patterns are learned">
-            {searchIcon} Search knowledge
-          </button>
-          <button className="kb-chrome" disabled title="Filters become available once patterns are learned">
-            {filterIcon} Filters
-          </button>
         </div>
       </div>
 
@@ -92,19 +56,6 @@ export default function KnowledgeBasePage() {
             resolved incidents populates this page.
           </p>
           <Link to="/incidents"><button className="primary">Go to incidents</button></Link>
-        </div>
-        <div className="kb-skel-grid" aria-hidden="true">
-          {SKELETONS.map((widths, i) => (
-            <div className="kb-skel" key={i}>
-              {widths.map((w, j) => (
-                <span className="kb-skel-bar" style={{ width: `${w}%` }} key={j} />
-              ))}
-              <span className="kb-skel-pills">
-                <span className="kb-skel-pill" />
-                <span className="kb-skel-pill" />
-              </span>
-            </div>
-          ))}
         </div>
       </section>
 

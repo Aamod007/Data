@@ -6,7 +6,6 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     app_name: str = "AI Data Pipeline Doctor"
-    environment: str = "development"
 
     # SQLite by default so the app runs anywhere; point at Postgres in prod.
     database_url: str = "sqlite:///./pipeline_doctor.db"
@@ -15,7 +14,6 @@ class Settings(BaseSettings):
     # rule-based classifier so the product still works end to end.
     anthropic_api_key: str = ""
     diagnosis_model: str = "claude-sonnet-5"
-    triage_model: str = "claude-haiku-4-5-20251001"
     max_diagnosis_tokens: int = 4096
 
     # How many characters of log context we send to the LLM after smart

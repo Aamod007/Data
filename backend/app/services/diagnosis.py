@@ -11,7 +11,6 @@ Pipeline per incident:
 Falls back to rules+KB only when no Anthropic API key is configured, so the
 system works end to end without external dependencies.
 """
-import json
 import logging
 import time
 from dataclasses import dataclass, field
@@ -22,8 +21,6 @@ from . import triage
 from .fingerprint import extract_error_lines, truncate_log
 
 logger = logging.getLogger(__name__)
-
-PROMPT_VERSION = "v1"
 
 DIAGNOSIS_TOOL = {
     "name": "report_diagnosis",
@@ -113,7 +110,6 @@ class DiagnosisResult:
     is_transient: bool = False
     engine: str = "rules"
     model_version: str = ""
-    prompt_version: str = PROMPT_VERSION
     latency_ms: int = 0
 
 
@@ -188,7 +184,7 @@ def _verify_evidence(result: DiagnosisResult, log: str) -> DiagnosisResult:
         result.confidence = min(result.confidence, 0.4)
         result.root_cause_summary = "[Hypothesis] " + result.root_cause_summary
     elif dropped:
-        result.confidence = min(result.confidence, result.confidence * 0.85)
+        result.confidence *= 0.85
     return result
 
 
@@ -277,7 +273,3 @@ def diagnose(
 
     result.latency_ms = int((time.monotonic() - start) * 1000)
     return result
-
-
-def _dump_json(payload: dict) -> str:
-    return json.dumps(payload, ensure_ascii=False, indent=2)

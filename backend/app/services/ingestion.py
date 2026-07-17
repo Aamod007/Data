@@ -94,12 +94,10 @@ def ingest_run_event(db: Session, workspace_id: str, connection: Connection,
 
         if t.log:
             redacted, n_redactions = redact(t.log)
-            sig = fingerprint(redacted, event.pipeline_external_id, t.node_type)
             db.add(LogBundle(
                 task_run_id=task_run.id,
                 content=redacted,
                 redaction_count=n_redactions,
-                error_signature=sig,
             ))
             if t.status in (RunStatus.failed, RunStatus.upstream_failed):
                 failed_task_logs.append((task_run, redacted))
@@ -202,7 +200,6 @@ def ingest_run_event(db: Session, workspace_id: str, connection: Connection,
                 is_transient=result.is_transient,
                 engine=result.engine,
                 model_version=result.model_version,
-                prompt_version=result.prompt_version,
                 latency_ms=result.latency_ms,
             ))
             # Better incident title once diagnosed

@@ -1,4 +1,4 @@
-const stroke = {
+export const stroke = {
   fill: "none",
   stroke: "currentColor",
   strokeWidth: 1.6,

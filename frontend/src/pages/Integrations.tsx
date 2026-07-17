@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { BASE } from "../api/client";
+import { icons, stroke } from "../components/icons";
 import "./integrations.css";
-
-const BASE = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
 const AIRFLOW_SNIPPET = `# airflow: DAG-level failure callback
 import requests
@@ -60,33 +60,12 @@ const GENERIC_SNIPPET = `curl -X POST ${BASE}/v1/ingest/event \\
   }'`;
 
 /* small stroke glyphs for the connector tiles (same style as components/icons) */
-const stroke = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.6,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-} as const;
-
 const glyphs = {
-  airflow: (
-    <svg width="16" height="16" viewBox="0 0 16 16" {...stroke}>
-      <circle cx="3" cy="8" r="1.7" />
-      <circle cx="13" cy="3.5" r="1.7" />
-      <circle cx="13" cy="12.5" r="1.7" />
-      <path d="M4.6 7.3 11.3 4.1M4.6 8.7l6.7 3.2" />
-    </svg>
-  ),
   dbt: (
     <svg width="16" height="16" viewBox="0 0 16 16" {...stroke}>
       <path d="M9.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5L9.5 1.5Z" />
       <path d="M9.5 1.5V5H13" />
       <path d="M6.2 8.2 4.8 9.6l1.4 1.4M9.8 8.2l1.4 1.4-1.4 1.4" />
-    </svg>
-  ),
-  bolt: (
-    <svg width="16" height="16" viewBox="0 0 16 16" {...stroke}>
-      <path d="M8.7 1.5 4 9h3.2l-.9 5.5L11 7H7.8l.9-5.5Z" />
     </svg>
   ),
   cloud: (
@@ -111,13 +90,6 @@ const glyphs = {
       <path d="M8 2.2 9.4 6.6 13.8 8 9.4 9.4 8 13.8 6.6 9.4 2.2 8l4.4-1.4L8 2.2Z" />
     </svg>
   ),
-  plug: (
-    <svg width="16" height="16" viewBox="0 0 16 16" {...stroke}>
-      <path d="M5.5 1.8v3.4M10.5 1.8v3.4" />
-      <path d="M3.5 5.2h9v2.6a4.5 4.5 0 0 1-9 0V5.2Z" />
-      <path d="M8 12.3v2" />
-    </svg>
-  ),
 };
 
 type Connector = {
@@ -129,9 +101,9 @@ type Connector = {
 };
 
 const CONNECTORS: Connector[] = [
-  { name: "Apache Airflow", icon: glyphs.airflow, live: true, path: "/v1/ingest/airflow", anchor: "ig-setup-airflow" },
+  { name: "Apache Airflow", icon: icons.pipelines, live: true, path: "/v1/ingest/airflow", anchor: "ig-setup-airflow" },
   { name: "dbt", icon: glyphs.dbt, live: true, path: "/v1/ingest/dbt", anchor: "ig-setup-dbt" },
-  { name: "Generic CPEM", icon: glyphs.bolt, live: true, path: "/v1/ingest/event", anchor: "ig-setup-generic" },
+  { name: "Generic CPEM", icon: icons.bolt, live: true, path: "/v1/ingest/event", anchor: "ig-setup-generic" },
   { name: "Azure Data Factory", icon: glyphs.cloud, live: false, anchor: "ig-setup-generic" },
   { name: "Databricks", icon: glyphs.database, live: false, anchor: "ig-setup-generic" },
   { name: "Snowflake tasks", icon: glyphs.snowflake, live: false, anchor: "ig-setup-generic" },
@@ -236,7 +208,7 @@ export default function IntegrationsPage() {
       </div>
 
       <div className="ig-cta">
-        <div className="ig-icon">{glyphs.plug}</div>
+        <div className="ig-icon">{icons.plug}</div>
         <h3>No integration wired up yet?</h3>
         <p>
           Azure Data Factory, Databricks, Snowflake tasks, and Spark can already post the

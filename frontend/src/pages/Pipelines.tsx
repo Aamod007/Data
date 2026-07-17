@@ -1,16 +1,9 @@
 import { Link } from "react-router-dom";
 import { api } from "../api/client";
 import { PlatformPill } from "../components/Pills";
+import { stroke } from "../components/icons";
 import { useFetch } from "../hooks/useFetch";
 import "./pipelines.css";
-
-const stroke = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.6,
-  strokeLinecap: "round",
-  strokeLinejoin: "round",
-} as const;
 
 const glyphs = {
   refresh: (

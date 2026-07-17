@@ -1,10 +1,10 @@
 """Dashboard stats + pipelines listing."""
 from fastapi import APIRouter, Depends
-from sqlalchemy import func
+from sqlalchemy import case, func
 from sqlalchemy.orm import Session
 
 from ..database import get_db
-from ..models import Diagnosis, Incident, IncidentStatus, Pipeline, Run
+from ..models import Incident, IncidentStatus, Pipeline, Run, RunStatus
 from ..schemas import DashboardStats, IncidentSummary
 from .incidents import _latest_diagnosis, _summary
 
@@ -47,10 +47,6 @@ def dashboard(db: Session = Depends(get_db)):
 
 @router.get("/pipelines")
 def list_pipelines(db: Session = Depends(get_db)):
-    from sqlalchemy import case
-
-    from ..models import RunStatus
-
     rows = (
         db.query(
             Pipeline,

@@ -1,6 +1,7 @@
 """Secret/PII redaction — runs BEFORE logs are stored or sent to any LLM."""
 import math
 import re
+from collections import Counter
 
 # Each rule: (name, compiled pattern, replacement)
 _RULES: list[tuple[str, re.Pattern, str]] = [
@@ -63,11 +64,8 @@ _SAFE_TOKEN = re.compile(
 def _shannon_entropy(s: str) -> float:
     if not s:
         return 0.0
-    freq: dict[str, int] = {}
-    for ch in s:
-        freq[ch] = freq.get(ch, 0) + 1
     n = len(s)
-    return -sum((c / n) * math.log2(c / n) for c in freq.values())
+    return -sum((c / n) * math.log2(c / n) for c in Counter(s).values())
 
 
 def redact(text: str) -> tuple[str, int]:

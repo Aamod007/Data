@@ -93,7 +93,6 @@ class Connection(Base):
     workspace_id: Mapped[str] = mapped_column(ForeignKey("workspaces.id"), index=True)
     platform: Mapped[PlatformType] = mapped_column(Enum(PlatformType))
     name: Mapped[str] = mapped_column(String(200))
-    config: Mapped[dict] = mapped_column(JSON, default=dict)  # non-secret settings
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     workspace: Mapped["Workspace"] = relationship(back_populates="connections")
@@ -110,7 +109,6 @@ class Pipeline(Base):
     platform: Mapped[PlatformType] = mapped_column(Enum(PlatformType))
     external_id: Mapped[str] = mapped_column(String(500), index=True)  # dag_id etc.
     name: Mapped[str] = mapped_column(String(500))
-    meta: Mapped[dict] = mapped_column(JSON, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     runs: Mapped[list["Run"]] = relationship(back_populates="pipeline")
@@ -163,7 +161,6 @@ class LogBundle(Base):
     task_run_id: Mapped[str] = mapped_column(ForeignKey("task_runs.id"), index=True)
     content: Mapped[str] = mapped_column(Text)  # redacted
     redaction_count: Mapped[int] = mapped_column(Integer, default=0)
-    error_signature: Mapped[str] = mapped_column(String(64), index=True, default="")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     task_run: Mapped["TaskRun"] = relationship(back_populates="log_bundles")
@@ -209,7 +206,6 @@ class Diagnosis(Base):
     is_transient: Mapped[bool] = mapped_column(default=False)
     engine: Mapped[str] = mapped_column(String(50), default="rules")  # rules | llm
     model_version: Mapped[str] = mapped_column(String(100), default="")
-    prompt_version: Mapped[str] = mapped_column(String(50), default="")
     latency_ms: Mapped[int] = mapped_column(Integer, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
